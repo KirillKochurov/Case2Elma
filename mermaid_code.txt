@@ -1,0 +1,28 @@
+graph TD
+    Start((Регистрация заявки)) --> Check[Первичная проверка]
+    
+    Check -->|reject| Reject1[Заявка отклонена]
+    Check -->|accept| Mgr[Согласование руководителем]
+    
+    Mgr -->|return| Rework[Доработка заявки]
+    Rework --> Check
+    
+    Mgr -->|cancel| Cancel[Заявка отменена]
+    Mgr -->|reject| Reject2[Заявка отклонена]
+    Mgr -->|accept| Budget[Проверка бюджета]
+    
+    Budget -->|accept| Extra[Дополнительное согласование]
+    Extra -->|accept| Exec[Исполнение закупки]
+    
+    Budget -->|accept| Exec
+    
+    Exec -->|accept| Done((Заявка выполнена))
+    
+    classDef startend fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef activity fill:#bbf,stroke:#333,stroke-width:1px;
+    classDef finalNode fill:#f96,stroke:#333,stroke-width:2px;
+    
+    class Start startend;
+    class Done finalNode;
+    class Check,Mgr,Budget,Extra,Exec,Rework activity;
+    class Reject1,Reject2,Cancel finalNode;
